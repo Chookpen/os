@@ -14,20 +14,21 @@ This is a very early build, dont use this in production!!!!!!
 
 (From my internal documents, config files will be provided in the "config" directory)
 
+You'll need to install a couple dependencies first, this depends on your Linux distro, check the `make` error logs or look up info on compiling what you need.
+
 1. Make Linux kernel and Busybox (make sure to apply the configs!!!).
 2. Access the bzImage at linux/arch/x86/boot/bzImage and copy it to boot-files/bzImage
-3. In the BusyBox folder, run make CONFIG_PREFIX=/boot-files/initramfs install
+3. In the BusyBox folder, run `make CONFIG_PREFIX=/boot-files/initramfs install`
 4. Make a file called init in the /boot-files/initramfs and make it start the shell using the shell, and make it executable.
 5. Remove linuxrc
-6. Run find . | cpio -o -H newc > ../init.cpio in initramfs
+6. Run `find . | cpio -o -H newc > ../init.cpio` in initramfs
 7. cd ..
-8. Run dd if=/dev/zero of=boot bs=1M count=50
-9. Make a fat filesystem with mkfs -t fat boot
-10. Install syslinux with syslinux boot
+8. Run `dd if=/dev/zero of=boot bs=1M count=50`
+9. Make a fat filesystem with `mkfs -t fat boot`
+10. Install syslinux with `syslinux boot`
 11. Mount boot at a directory
 12. Copy bzImage and init.cpio to where boot is mounted.
 13. Add config file for syslinux to root directory.
 14. Unmount boot.
-15. Test in QEMU with qemu-system-x86_64 boot
-16. Run /bzImage -initrd=/init.cpio 
+15. Test in QEMU with `qemu-system-x86_64 boot`
 Should be working now!
